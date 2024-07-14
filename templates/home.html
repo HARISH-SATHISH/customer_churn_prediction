@@ -1,58 +1,150 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Customer Churn</title>
+    <title>Customer Churn Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+            color: #555;
+        }
+        input[type="text"], input[type="submit"] {
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .result h2 {
+            color: #007bff;
+        }
+        .result h3 {
+            color: #333;
+        }
+        .feature-importance {
+            margin-top: 20px;
+        }
+        .feature-importance h3 {
+            color: #555;
+        }
+        .feature-importance ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .feature-importance li {
+            background-color: #f9f9f9;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .dashboard-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .dashboard-link a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        .dashboard-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
-<h2><center><u> CUSTOMER CHURN PREDICTION </u></center></h2>
-<body style="background-color:powderblue;">
-<form action="/" method="POST">
-    <fieldset>
-        <center>
-                 <div class="form">
-                     <label for="Dependents">Dependents:</label><br>
-                     <input style="background-color: gold;" type="text" name="Dependents" id="Dependents" value="" ><br>
+<body>
+    <div class="container">
+        <h1>Customer Churn Prediction</h1>
+        <form method="POST">
+            <label for="Dependents">Dependents:</label>
+            <input type="text" id="Dependents" name="Dependents" value="{{ Dependents }}">
+            
+            <label for="tenure">Tenure:</label>
+            <input type="text" id="tenure" name="tenure" value="{{ tenure }}">
+            
+            <label for="OnlineSecurity">Online Security:</label>
+            <input type="text" id="OnlineSecurity" name="OnlineSecurity" value="{{ OnlineSecurity }}">
+            
+            <label for="OnlineBackup">Online Backup:</label>
+            <input type="text" id="OnlineBackup" name="OnlineBackup" value="{{ OnlineBackup }}">
+            
+            <label for="DeviceProtection">Device Protection:</label>
+            <input type="text" id="DeviceProtection" name="DeviceProtection" value="{{ DeviceProtection }}">
+            
+            <label for="TechSupport">Tech Support:</label>
+            <input type="text" id="TechSupport" name="TechSupport" value="{{ TechSupport }}">
+            
+            <label for="Contract">Contract:</label>
+            <input type="text" id="Contract" name="Contract" value="{{ Contract }}">
+            
+            <label for="PaperlessBilling">Paperless Billing:</label>
+            <input type="text" id="PaperlessBilling" name="PaperlessBilling" value="{{ PaperlessBilling }}">
+            
+            <label for="MonthlyCharges">Monthly Charges:</label>
+            <input type="text" id="MonthlyCharges" name="MonthlyCharges" value="{{ MonthlyCharges }}">
+            
+            <label for="TotalCharges">Total Charges:</label>
+            <input type="text" id="TotalCharges" name="TotalCharges" value="{{ TotalCharges }}">
+            
+            <input type="submit" value="Predict">
+        </form>
 
-                     <label for="tenure">tenure:</label><br>
-                     <input style="background-color: gold;" type="number" name="tenure" id="tenure" value=""/><br>
+        <div class="result">
+            {% if op1 %}
+                <h2>{{ op1 }}</h2>
+                <h3>{{ op2 }}</h3>
+            {% endif %}
+        </div>
 
-                     <label for="OnlineSecurity"> OnlineSecurity:</label><br>
-                     <input style="background-color: gold;" type="text" name="OnlineSecurity" id="OnlineSecurity" value=""><br>
+        <div class="feature-importance">
+            {% if feature_importance %}
+                <h3>Feature Importance:</h3>
+                <ul>
+                    {% for item in feature_importance %}
+                        <li>{{ item['Feature'] }}: {{ item['Importance'] }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
 
-                     <label for="OnlineBackup">OnlineBackup:</label><br>
-                     <input style="background-color: gold;" type="text" name="OnlineBackup" id="OnlineBackup" value=""><br>
-
-                     <label for="DeviceProtection">DeviceProtection:</label><br>
-                     <input style="background-color: gold;" type="text" name="DeviceProtection" id="DeviceProtection" value=""><br>
-
-                     <label for="TechSupport">TechSupport:</label><br>
-                     <input style="background-color: gold;" type="text" name="TechSupport" id="TechSupport" value=""><br>
-
-                     <label for="Contract">Contract:</label><br>
-                     <input style="background-color: gold;" type="text" name="Contract" id="Contract" value=""><br>
-
-                     <label for="PaperlessBilling">PaperlessBilling:</label><br>
-                     <input style="background-color: gold;" type="text" name="PaperlessBilling" id="PaperlessBilling" value=""><br>
-
-                     <label for="MonthlyCharges">MonthlyCharges:</label><br>
-                     <input style="background-color: gold;" type="text" name="MonthlyCharges" id="MonthlyCharges" value=""><br>
-
-                     <label for="TotalCharges">TotalCharges:</label><br>
-                     <input style="background-color: gold;" type="text" name="TotalCharges" id="TotalCharges" value=""><br>
-                 </div>
-
-                 <div class="col-sm-3">
-                     <button style="background-color:red;border-color:powderblue;color:white" type="submit" class="btn btn-primary" name="submit">SUBMIT</button>
-			     </div>
-    </center>
-    </fieldset>
-
-</form>
-
-<div class="form">
-    <center><br>
-        <output> <strong>{{op1}}</strong></output><br><output><strong>{{op2}}</strong></output>
-    </center>
-</div>
+        <div class="dashboard-link">
+            <a href="/dashboard/">Go to Dashboard</a>
+        </div>
+    </div>
 </body>
 </html>
